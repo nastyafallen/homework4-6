@@ -26,7 +26,7 @@ public class StudentService {
         this.facultyRepository = facultyRepository;
     }
 
-    public Student createStudent(Student student){
+    public Student createStudent(Student student) {
         logger.info("Was invoked method for creation of student");
         return studentRepository.save(student);
     }
@@ -109,9 +109,36 @@ public class StudentService {
     public Integer number() {
         long time = System.currentTimeMillis();
         logger.info("Was invoked method number()");
-        int sum = Stream.iterate(1, a -> a<=1_000_000, a -> a + 1)
+        int sum = Stream.iterate(1, a -> a <= 1_000_000, a -> a + 1)
                 .reduce(0, Integer::sum);
         System.out.println(System.currentTimeMillis() - time);
         return sum;
+    }
+
+    public List<String> findAllStudents() {
+        logger.info("Was invoked method to find all students");
+        List<String> result = studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .toList();
+
+        System.out.println(result.get(0)
+                + "\n"
+                + result.get(1)
+                + "\n"
+                + result.get(6)
+                + "\n"
+                + result.get(7)
+                + "\n"
+                + result.get(8));
+        new Thread(() -> System.out.println(result.get(2)
+                + "\n"
+                + result.get(3)))
+                .start();
+        new Thread(() -> System.out.println(result.get(4)
+                + "\n"
+                + result.get(5)))
+                .start();
+        return result;
     }
 }
