@@ -104,6 +104,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findAllStudents());
     }
 
+    @GetMapping("/listOfStudentsInOrder")
+    public ResponseEntity<List<String>> findAllStudentsSynchronized() {
+        return ResponseEntity.ok(studentService.findAllStudentsSynchronized());
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<String> handleStudentNotExistsException(EmptyResultDataAccessException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

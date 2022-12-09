@@ -124,21 +124,55 @@ public class StudentService {
 
         System.out.println(result.get(0)
                 + "\n"
-                + result.get(1)
-                + "\n"
-                + result.get(6)
-                + "\n"
-                + result.get(7)
-                + "\n"
-                + result.get(8));
+                + result.get(1));
+
         new Thread(() -> System.out.println(result.get(2)
                 + "\n"
                 + result.get(3)))
                 .start();
+
         new Thread(() -> System.out.println(result.get(4)
                 + "\n"
                 + result.get(5)))
                 .start();
+
+        System.out.println(result.get(6)
+                + "\n"
+                + result.get(7)
+                + "\n"
+                + result.get(8));
+
         return result;
+    }
+
+    public List<String> findAllStudentsSynchronized() {
+        logger.info("Was invoked synchronized method to find all students");
+        List<String> result = studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .toList();
+
+        printLn(result.get(0));
+        printLn(result.get(1));
+
+        new Thread(() -> printLn(result.get(2)
+                + "\n"
+                + result.get(3)))
+                .start();
+
+        new Thread(() -> printLn(result.get(4)
+                + "\n"
+                + result.get(5)))
+                .start();
+
+        printLn(result.get(6));
+        printLn(result.get(7));
+        printLn(result.get(8));
+
+        return result;
+    }
+
+    public synchronized void printLn(String s) {
+        System.out.println(s);
     }
 }
