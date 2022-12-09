@@ -89,8 +89,8 @@ public class StudentService {
         List<String> result = studentRepository.findAll()
                 .stream()
                 .map(Student::getName)
-                .sorted(Comparator.naturalOrder())
                 .filter(String -> String.startsWith(s))
+                .sorted(Comparator.naturalOrder())
                 .map(String::toUpperCase)
                 .toList();
         return result;
