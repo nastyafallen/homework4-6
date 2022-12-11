@@ -19,6 +19,7 @@ public class StudentService {
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
+    private Integer index = 0;
 
     @Autowired
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
@@ -152,27 +153,38 @@ public class StudentService {
                 .map(Student::getName)
                 .toList();
 
-        printLn(result.get(0));
-        printLn(result.get(1));
+        printLn(result, index);
+        printLn(result, index);
 
-        new Thread(() -> printLn(result.get(2)
-                + "\n"
-                + result.get(3)))
-                .start();
+        new Thread(() -> {
+            printLn(result, index);
+            printLn(result, index);
+        }).start();
 
-        new Thread(() -> printLn(result.get(4)
-                + "\n"
-                + result.get(5)))
-                .start();
+        new Thread(() -> {
+            printLn(result, index);
+            printLn(result, index);
+        }).start();
 
-        printLn(result.get(6));
-        printLn(result.get(7));
-        printLn(result.get(8));
+        printLn(result, index);
+        printLn(result, index);
+        printLn(result, index);
 
         return result;
     }
 
-    public synchronized void printLn(String s) {
+    /*public synchronized void printLn(String s) {
         System.out.println(s);
+    }*/
+
+    private void printLn(List<String> example, Integer x) {
+        synchronized (index) {
+            if (x < example.size()) {
+                System.out.println(example.get(x));
+                index++;
+            } else {
+                System.out.println("Ошибка! Индекс должен быть меньше размера листа!");
+            }
+        }
     }
 }
