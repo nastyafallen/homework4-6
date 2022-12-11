@@ -183,7 +183,8 @@ public class StudentService {
                 System.out.println(example.get(x));
                 index++;
             } else {
-                System.out.println("Ошибка! Индекс должен быть меньше размера листа!");
+                System.out.println(example.get(0));
+                index = 1;
             }
         }
     }
