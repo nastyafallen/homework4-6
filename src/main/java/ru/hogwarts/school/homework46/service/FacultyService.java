@@ -49,10 +49,14 @@ public class FacultyService {
         return facultyRepository.getFacultiesByColor(color);
     }
 
+    //Method finds faculty by written parameter as possible name or color value
+    //ignoring lower case and upper case differences
     public Faculty findByNameOrColor(String name) {
         return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, name);
     }
 
+    //Method finds faculty by id number and returns set of its students or
+    // null if faculty with such id hasn't been found
     public Set<Student> getStudentsById(Long id) {
         Optional<Faculty> optional = facultyRepository.findById(id);
         if (optional.isPresent()) {

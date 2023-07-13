@@ -12,6 +12,8 @@ import ru.hogwarts.school.homework46.model.Student;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.stream.Stream;
 
 @Service
@@ -70,21 +72,26 @@ public class StudentService {
         return student.getFaculty();
     }
 
+    //Result of this method is based on sql-query
     public Integer countStudents() {
         logger.info("Was invoked method to count students");
         return studentRepository.countStudents();
     }
 
+    //Result of this method is based on sql-query
     public Double averageAge() {
         logger.info("Was invoked method to count average age of students");
         return studentRepository.averageAge();
     }
 
+    //Result of this method is based on sql-query
     public List<Student> getLastStudents(int number) {
         logger.info("Was invoked method to find last students");
         return studentRepository.getLastStudents(number);
     }
 
+    //Method returns all student names that start with the written letter,
+    // in alphabetical order and in upper case letters
     public List<String> findAllInAlphabeticalOrder(String s) {
         logger.info("Was invoked method to find all students in alphabetical order");
         List<String> result = studentRepository.findAll()
@@ -97,16 +104,18 @@ public class StudentService {
         return result;
     }
 
-    public Double middleAge() {
+    //Method calculates average age of all students
+    public OptionalDouble middleAge() {
         logger.info("Was invoked method to count middle age of all students");
-        Double result = studentRepository.findAll()
+        OptionalDouble result = studentRepository.findAll()
                 .stream()
                 .mapToDouble(Student::getAge)
-                .average()
-                .orElse(Double.NaN);
+                .average();
         return result;
     }
 
+    //This is improved version of method:
+    //int sum = Stream.iterate(1, a -> a +1) .limit(1_000_000) .reduce(0, (a, b) -> a + b );
     public Integer number() {
         long time = System.currentTimeMillis();
         logger.info("Was invoked method number()");
@@ -116,6 +125,7 @@ public class StudentService {
         return sum;
     }
 
+    //Method uses parallel execution of multiple threads to print all students names
     public List<String> findAllStudents() {
         logger.info("Was invoked method to find all students");
         List<String> result = studentRepository.findAll()
@@ -146,6 +156,7 @@ public class StudentService {
         return result;
     }
 
+    //Method uses synchronized execution of multiple threads to print all students names
     public List<String> findAllStudentsSynchronized() {
         logger.info("Was invoked synchronized method to find all students");
         List<String> result = studentRepository.findAll()
@@ -173,10 +184,11 @@ public class StudentService {
         return result;
     }
 
-    /*public synchronized void printLn(String s) {
-        System.out.println(s);
-    }*/
+     /* public synchronized void printLn(String s) {
+         System.out.println(s);
+      } */
 
+    //This method is only needed in method findAllStudentsSynchronized()
     private void printLn(List<String> example, Integer x) {
         synchronized (index) {
             if (x < example.size()) {
