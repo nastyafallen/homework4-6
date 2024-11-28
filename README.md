@@ -19,7 +19,7 @@
 
 ## Функции
 
-- **FacultyController** (/faculty)
+**FacultyController** (/faculty)
  - Добавление нового факультета: POST /
  - Поиск факультета по ID: GET /find?id={id}
  - Изменение данных факультета: PUT /
@@ -29,7 +29,7 @@
  - Получение списка студентов факультета по ID: GET /{id}/students
  - Поиск самого длинного названия среди факультетов: GET /longestFacultyName
 
-- **StudentController** (/student)
+**StudentController** (/student)
  - Добавление нового студента: POST /
  - Поиск студента по ID: GET /find?id={id}
  - Обновление данных студента: PUT /
@@ -43,11 +43,11 @@
  - Получение списка студентов, чьи имена начинаются с указанной буквы, в алфавитном порядке: GET /alphabeticalOrder?letter={letter}
  - Получение списка всех имен студентов и вывод их в консоль: GET /listOfStudents
 
-- **AvatarController** (/avatar)
+**AvatarController** (/avatar)
  - Сохранение нового аватара для студента по ID в базе данных и в локальной папке: POST /{studentId}
  - Получение аватара из базы данных в виде байтового массива: GET /{id}/avatar-from-db
  - Получение пути к файлу аватара в локальной папке: GET /{id}/avatar-from-file
  - Получение списка всех аватаров из базы данных с пагинацией: GET /allAvatars
 
-- **InfoController** (/info)
+**InfoController** (/info)
  - Отображение порта, на котором работает приложение: GET /getPort
