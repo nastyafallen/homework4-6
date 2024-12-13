@@ -12,6 +12,8 @@ import ru.hogwarts.school.homework46.model.Faculty;
 import ru.hogwarts.school.homework46.model.Student;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 
 @RequestMapping("/student")
 @RestController
@@ -89,14 +91,29 @@ public class StudentController {
 
     @GetMapping("/middleAge")
     public ResponseEntity<String> middleAge() {
+        OptionalDouble opt = studentService.middleAge();
+        if (opt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Ошибка! Запрос не может быть выполнен!");
+        }
         return ResponseEntity.ok("Средний возраст всех студентов составил "
-                + studentService.middleAge()
+                + opt.getAsDouble()
                 + " лет");
     }
 
     @GetMapping("/info")
     public ResponseEntity<Integer> number() {
         return ResponseEntity.ok(studentService.number());
+    }
+
+    @GetMapping("/listOfStudents")
+    public ResponseEntity<List<String>> findAllStudents() {
+        return ResponseEntity.ok(studentService.findAllStudents());
+    }
+
+    @GetMapping("/listOfStudentsInOrder")
+    public ResponseEntity<List<String>> findAllStudentsSynchronized() {
+        return ResponseEntity.ok(studentService.findAllStudentsSynchronized());
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

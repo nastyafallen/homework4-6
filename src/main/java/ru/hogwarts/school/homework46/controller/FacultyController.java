@@ -53,11 +53,15 @@ public class FacultyController {
         return facultyService.getFacultiesByColor(color);
     }
 
+    //Method finds faculty by written parameter as possible name or color value
+    //ignoring lower case and upper case differences
     @GetMapping
     public ResponseEntity<Faculty> findByNameOrColor(@RequestParam("value") String name) {
         return ResponseEntity.ok(facultyService.findByNameOrColor(name));
     }
 
+    //Method finds faculty by id number and returns set of its students or
+    // null if faculty with such id hasn't been found
     @GetMapping("/{id}/students")
     public Set<Student> getStudentsById(@PathVariable Long id) {
         return facultyService.getStudentsById(id);
